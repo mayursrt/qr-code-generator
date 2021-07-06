@@ -51,16 +51,12 @@ with st.form(key='my_form', clear_on_submit=clear_on_submit):
 
 #----------------------------------------------------------------------------------------------------------------------------
 # Main Function
-
-st.markdown("<h3 style='text-align: center; color: black;'>Here is your QR Code</h1>", unsafe_allow_html=True)
-
-
-col1, col2, col3 = st.beta_columns([5,10,1])
-col1.empty()
 if content:
+    st.markdown("<h3 style='text-align: center; color: black;'>Here is your QR Code</h1>", unsafe_allow_html=True)
+    col1, col2, col3 = st.beta_columns([5,10,1])
+    col1.empty()
     col2.image(generate_qr(content, size), caption=f'QR Code Content : {content}')
-
-col2.empty()
+    col3.empty()
 #----------------------------------------------------------------------------------------------------------------------------
 
 
