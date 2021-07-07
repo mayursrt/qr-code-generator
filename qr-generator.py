@@ -1,14 +1,9 @@
 #----------------------------------------------------------------------------------------------------------------------------
 # Imports
 import streamlit as st
-from pyqrcode import QRCode
-import pyqrcode
-from PIL import Image, ImageDraw
-import png
+from PIL import Image
 from generate_function import *
 import numpy as np
-from io import BytesIO
-import base64
 #----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -61,7 +56,12 @@ if content:
     col1.empty()
     col2.image(qr_image, caption=f'QR Code Content : {content}')
     col3.empty()
-    st.write(qr_image)
+    array = np.asarray(qr_image)
+    result = Image.fromarray(array)
+    link = image_download(result)
+    st.markdown(f"<h4 style='text-align: center; color: black;'>{link}</h4>", unsafe_allow_html=True)
+    
+
 #----------------------------------------------------------------------------------------------------------------------------
 
 ############################################################################################################################# 
@@ -69,10 +69,6 @@ if content:
 
 
 
-array = np.asarray(qr_image)
-result = Image.fromarray(array)
-link = image_download(result)
-st.markdown(link, unsafe_allow_html=True)
 #############################################################################################################################
 
 
