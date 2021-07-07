@@ -3,9 +3,12 @@
 import streamlit as st
 from pyqrcode import QRCode
 import pyqrcode
-from PIL import Image
+from PIL import Image, ImageDraw
 import png
-from generate import *
+from generate_function import *
+import numpy as np
+from io import BytesIO
+import base64
 #----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -52,13 +55,25 @@ with st.form(key='my_form', clear_on_submit=clear_on_submit):
 #----------------------------------------------------------------------------------------------------------------------------
 # Main Function
 if content:
+    qr_image = generate_qr(content, size)
     st.markdown("<h3 style='text-align: center; color: black;'>Here is your QR Code</h1>", unsafe_allow_html=True)
     col1, col2, col3 = st.beta_columns([5,10,1])
     col1.empty()
-    col2.image(generate_qr(content, size), caption=f'QR Code Content : {content}')
+    col2.image(qr_image, caption=f'QR Code Content : {content}')
     col3.empty()
+    st.write(qr_image)
 #----------------------------------------------------------------------------------------------------------------------------
 
+############################################################################################################################# 
+
+
+
+
+array = np.asarray(qr_image)
+result = Image.fromarray(array)
+link = image_download(result)
+st.markdown(link, unsafe_allow_html=True)
+#############################################################################################################################
 
 
 #---------------------------------------------------------------------------------------------------------------------------
@@ -101,5 +116,3 @@ st.markdown(footer,unsafe_allow_html=True)
 
 
 
-############################################################################################################################# 
-#############################################################################################################################
