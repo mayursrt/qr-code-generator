@@ -5,6 +5,7 @@ import pyqrcode
 import png
 from io import BytesIO
 import base64
+from PIL import Image
 #----------------------------------------------------------------------------------------------------------------------------
 
 
