@@ -32,10 +32,10 @@ size = st.slider('Adjust the image size', min_value = 6, max_value = 12, value =
 clear_on_submit = st.checkbox('Clear on submit')
 
 with st.form(key='my_form', clear_on_submit=clear_on_submit):
-    content = st.text_input('Enter Link or Text')
-    logo_file = st.file_uploader("click the botton to upload a picture", type=['png','jpeg','jpg'])
+    content = st.text_input('Enter Link or Text.')
+    logo_file = st.file_uploader("If you want to add a logo to the QR Code, Upload a Logo. (optional)", type=['png','jpeg','jpg'])
+    st.text('Note : Prefer to upload a square image')
     submit_button = st.form_submit_button(label='Generate')
-
 #----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -64,11 +64,6 @@ if content:
         link = image_download(result)
         
     st.markdown(f"<h4 style='text-align: center; color: black;'>{link}</h4>", unsafe_allow_html=True)
-
-    
-
-
-
 #----------------------------------------------------------------------------------------------------------------------------
 
 
