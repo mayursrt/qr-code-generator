@@ -33,6 +33,7 @@ clear_on_submit = st.checkbox('Clear on submit')
 
 with st.form(key='my_form', clear_on_submit=clear_on_submit):
     content = st.text_input('Enter Link or Text')
+    logo_file = st.file_uploader("click the botton to upload a picture", type=['png','jpeg','jpg'])
     submit_button = st.form_submit_button(label='Generate')
 
 #----------------------------------------------------------------------------------------------------------------------------
@@ -42,25 +43,40 @@ with st.form(key='my_form', clear_on_submit=clear_on_submit):
 #----------------------------------------------------------------------------------------------------------------------------
 # Body
 if content:
-    qr_image = generate_qr(content, size)
     st.markdown("<h3 style='text-align: center; color: black;'>Here is your QR Code</h1>", unsafe_allow_html=True)
     col1, col2, col3 = st.beta_columns([5,10,1])
     col1.empty()
-    col2.image(qr_image, caption=f'QR Code Content : {content}')
-    col3.empty()
-    array = np.asarray(qr_image)
-    result = Image.fromarray(array)
-    link = image_download(result)
-    st.markdown(f"<h4 style='text-align: center; color: black;'>{link}</h4>", unsafe_allow_html=True)
-#----------------------------------------------------------------------------------------------------------------------------
+    if not logo_file:
+        qr_image = generate_qr(content, size)
+        col2.image(qr_image, caption=f'QR Code Content : {content}')
+        array = np.asarray(qr_image)
+        result = Image.fromarray(array)
+        link = image_download(result)
 
+    elif logo_file:
+        open("./assets/logo.png", "wb").write(logo_file.getbuffer())
+        qr_image = generate_qr(content, logo=True,  size=size)
+        col2.image(qr_image, caption=f'QR Code Content : {content}')
+        image_file = Image.open(qr_image)
+        image_file = image_file.convert('RGB')
+        array = np.asarray(image_file)
+        result = Image.fromarray(array)
+        link = image_download(result)
+        
+    st.markdown(f"<h4 style='text-align: center; color: black;'>{link}</h4>", unsafe_allow_html=True)
+
+    
+
+
+
+#----------------------------------------------------------------------------------------------------------------------------
 
 
 #---------------------------------------------------------------------------------------------------------------------------
 # Footer
 footer="""<style>
-
 #MainMenu {visibility: hidden;}
+
 a:link , a:visited{
 color: black;
 background-color: transparent;
@@ -92,5 +108,6 @@ text-align: center;
 st.markdown(footer,unsafe_allow_html=True)
 #---------------------------------------------------------------------------------------------------------------------------
 
-############################################################################################################################# 
+
+#############################################################################################################################
 #############################################################################################################################
