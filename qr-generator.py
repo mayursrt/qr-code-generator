@@ -28,7 +28,7 @@ st.title('')
 
 #----------------------------------------------------------------------------------------------------------------------------
 # User Input
-size = st.slider('Adjust the image size', min_value = 6, max_value = 12, value = 9)
+size = 9
 clear_on_submit = st.checkbox('Clear on submit')
 
 with st.form(key='my_form', clear_on_submit=clear_on_submit):
@@ -44,11 +44,11 @@ with st.form(key='my_form', clear_on_submit=clear_on_submit):
 # Body
 if content:
     st.markdown("<h3 style='text-align: center; color: black;'>Here is your QR Code</h1>", unsafe_allow_html=True)
-    col1, col2, col3 = st.beta_columns([5,10,1])
+    col1, col2, col3 = st.beta_columns([4,10,4])
     col1.empty()
     if not logo_file:
         qr_image = generate_qr(content, size)
-        col2.image(qr_image, caption=f'QR Code Content : {content}')
+        col2.image(qr_image, caption=f'QR Code Content : {content}', use_column_width=True)
         array = np.asarray(qr_image)
         result = Image.fromarray(array)
         link = image_download(result)
@@ -56,7 +56,7 @@ if content:
     elif logo_file:
         open("./assets/logo.png", "wb").write(logo_file.getbuffer())
         qr_image = generate_qr(content, logo=True,  size=size)
-        col2.image(qr_image, caption=f'QR Code Content : {content}')
+        col2.image(qr_image, caption=f'QR Code Content : {content}', use_column_width=True)
         image_file = Image.open(qr_image)
         image_file = image_file.convert('RGB')
         array = np.asarray(image_file)
