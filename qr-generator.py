@@ -58,7 +58,7 @@ if content:
         qr_image = generate_qr(content, logo=True,  size=size)
         col2.image(qr_image, caption=f'QR Code Content : {content}', use_column_width=True)
         image_file = Image.open(qr_image)
-        image_file = image_file.convert('RGB')
+        image_file = image_file.convert('RGBA')
         array = np.asarray(image_file)
         result = Image.fromarray(array)
         link = image_download(result)

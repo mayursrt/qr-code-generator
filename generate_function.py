@@ -58,8 +58,8 @@ def generate_qr(content, size, logo=False):
 # QR Code Image Download Link
 def image_download(img):
     buffered = BytesIO()
-    img.save(buffered, format="JPEG")
+    img.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode()
-    href = f'<a href="data:file/jpg;base64,{img_str}" download="qr.jpg">Download QR Code as .jpg</a>'
+    href = f'<a href="data:file/png;base64,{img_str}" download="qr.png">Download QR Code as .png</a>'
     return href
 #----------------------------------------------------------------------------------------------------------------------------
